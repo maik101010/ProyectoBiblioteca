@@ -12,7 +12,6 @@ public interface RepositoryLibro extends JpaRepository<Libro, Integer> {
 Para agregar libros en la biblioteca se deberá añadir el ISBN y el nombre de libros, si el
 libro ya existe añade un ejemplar más al inventario.*/
 //	boolean agregarLibro(String codigoIsbn, String nombreLibro);
-//	boolean  eliminarLibro(String codigoIsbn);
 	Libro findByCodigoIsbn(String codigoisbn);
 //	Libro finLibro(int id);
 

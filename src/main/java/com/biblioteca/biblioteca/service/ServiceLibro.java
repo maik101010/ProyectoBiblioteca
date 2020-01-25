@@ -1,5 +1,7 @@
 package com.biblioteca.biblioteca.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,10 @@ public class ServiceLibro {
 		Libro entity = new Libro();
 		entity.setCodigoIsbn(codigoIsbn);
 		entity.setNombreLibro(nombreLibro);
+		entity.setCantidad(1);
 		repositoryLibro.save(entity);
 		return entity;
 	}
-	
-//	public boolean eliminarLibro(String codigoIsbn) {
-//		return repositoryLibro.eliminarLibro(codigoIsbn);
-//	}
 
 	public Libro findByCodigoIsbn(String codigoIsbn) {
 		// TODO Auto-generated method stub
@@ -30,9 +29,19 @@ public class ServiceLibro {
 	}
 
 	public void actualizarLibro(Libro libroRetornado) {
-		
 		repositoryLibro.save(libroRetornado);		
 	}
+
+	public List<Libro> findAll() {
+		// TODO Auto-generated method stub
+		return repositoryLibro.findAll();
+	}
+
+//	public boolean existsByCodigoIsbn(String codigoIsbn) {
+//		// TODO Auto-generated method stub
+//		return repositoryLibro.e;
+//	}
+
 	
 
 }

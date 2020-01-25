@@ -43,4 +43,11 @@ public class Libro {
 		this.cantidad = cantidad;
 	}
 
+	@Override
+	public String toString() {
+		return "Libro [idLibro=" + idLibro + ", codigoIsbn=" + codigoIsbn + ", nombreLibro=" + nombreLibro
+				+ ", cantidad=" + cantidad + "]";
+	}
+
+	
 }
