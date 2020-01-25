@@ -1,6 +1,5 @@
 package com.biblioteca.biblioteca.controller;
 
-
 import java.net.URISyntaxException;
 
 import javax.validation.Valid;
@@ -26,18 +25,19 @@ public class ControllerLibro {
 
 	@Autowired
 	private ServiceLibro serviceLibro;
-	
+
 	@Autowired
 	private ProcesoLibro procesoLibro;
-	
+
 	@PostMapping(path = "/libro/add")
-	ResponseEntity<Libro> crearLibro(@Valid @RequestBody String codigoIsbn, String nombreLibro) throws URISyntaxException {
-		Libro libroRetornado = procesoLibro.validarEjemplarInventario(codigoIsbn);
-		if(libroRetornado!=null) {
+	ResponseEntity<Libro> crearLibro(@Valid @RequestBody Libro libro) throws URISyntaxException {
+		Libro libroRetornado;
+		libroRetornado = procesoLibro.validarEjemplarInventario(libro.getCodigoIsbn());
+		if (libroRetornado != null) {
 			serviceLibro.actualizarLibro(libroRetornado);
+		} else {
+			libroRetornado = serviceLibro.insertarLibro(libro.getCodigoIsbn(), libro.getNombreLibro());
 		}
-		serviceLibro.insertarLibro(codigoIsbn, nombreLibro);
-//		Libro result = examenRepository.save(Libro);
 		return ResponseEntity.ok().body(libroRetornado);
 	}
 }

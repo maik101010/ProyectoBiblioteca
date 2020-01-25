@@ -12,16 +12,17 @@ import com.biblioteca.biblioteca.interfaces.RepositoryLibro;
 public class ServiceLibro {
 	@Autowired RepositoryLibro repositoryLibro;
 	
-	public void insertarLibro(String codigoIsbn, String nombreLibro) {
+	public Libro insertarLibro(String codigoIsbn, String nombreLibro) {
 		Libro entity = new Libro();
 		entity.setCodigoIsbn(codigoIsbn);
 		entity.setNombreLibro(nombreLibro);
 		repositoryLibro.save(entity);
+		return entity;
 	}
 	
-	public boolean eliminarLibro(String codigoIsbn) {
-		return repositoryLibro.eliminarLibro(codigoIsbn);
-	}
+//	public boolean eliminarLibro(String codigoIsbn) {
+//		return repositoryLibro.eliminarLibro(codigoIsbn);
+//	}
 
 	public Libro findByCodigoIsbn(String codigoIsbn) {
 		// TODO Auto-generated method stub
