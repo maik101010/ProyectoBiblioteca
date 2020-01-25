@@ -39,40 +39,45 @@ public class ControllerLibro {
 		Libro libroRetornado;
 		libroRetornado = procesoLibro.validarEjemplarInventario(libro.getCodigoIsbn());
 		if (libroRetornado != null) {
+			int cantidad = libroRetornado.getCantidad();
+			libroRetornado.setCantidad(++cantidad);
 			serviceLibro.actualizarLibro(libroRetornado);
 		} else {
 			libroRetornado = serviceLibro.insertarLibro(libro.getCodigoIsbn(), libro.getNombreLibro());
 		}
 		return ResponseEntity.ok().body(libroRetornado);
 	}
-	
+
 //	@DeleteMapping(path = "/examen/delete/{codigo}")
 //	ResponseEntity<Libro> ResponseEntity<Libro> eliminarLibro(@PathVariable(name = "codigo") String codigo) {
 //		return ResponseEntity.ok().body(new Libro());
 //	}
-	
+
 	@DeleteMapping(path = "/libro/delete/{codigo}")
 	public ResponseEntity<Libro> deleteUser(@PathVariable(name = "codigo") String codigoIsbn) {
 		Libro libroRetornado;
 		libroRetornado = procesoLibro.validarEjemplarInventario(codigoIsbn);
-		if (libroRetornado!=null) {
+		if (libroRetornado != null) {
 			int cantidad = libroRetornado.getCantidad();
-			libroRetornado.setCantidad(--cantidad);
-			serviceLibro.actualizarLibro(libroRetornado);
-			return ResponseEntity.ok().body(libroRetornado);
-			
+			if (cantidad != 0) {
+				libroRetornado.setCantidad(--cantidad);
+				serviceLibro.actualizarLibro(libroRetornado);
+				return ResponseEntity.ok().body(libroRetornado);
+			} else {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		} else {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
 
 	}
-	
+
 	@GetMapping(path = "/libro/get")
 	List<Libro> getLibro() throws URISyntaxException {
-		
-			List<Libro>libroRetornado = serviceLibro.findAll();
-		
+
+		List<Libro> libroRetornado = serviceLibro.findAll();
+
 		return libroRetornado;
 	}
 
