@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "libro")
 public class Libro {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
 	private int idLibro;
 	@Column(name = "isbn")
 	private String codigoIsbn;

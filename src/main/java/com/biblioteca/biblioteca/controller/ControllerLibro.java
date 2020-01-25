@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.biblioteca.biblioteca.entity.Libro;
-import com.biblioteca.biblioteca.negocio.ProcesoLibro;
+import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
 import com.biblioteca.biblioteca.service.ServiceLibro;
 
 @RestController
@@ -32,12 +32,12 @@ public class ControllerLibro {
 	private ServiceLibro serviceLibro;
 
 	@Autowired
-	private ProcesoLibro procesoLibro;
+	private ProcesoLogicaNegocio logicaNegocio;
 
 	@PostMapping(path = "/libro/add")
 	ResponseEntity<Libro> crearLibro(@Valid @RequestBody Libro libro) throws URISyntaxException {
 		Libro libroRetornado;
-		libroRetornado = procesoLibro.validarEjemplarInventario(libro.getCodigoIsbn());
+		libroRetornado = logicaNegocio.validarEjemplarInventario(libro.getCodigoIsbn());
 		if (libroRetornado != null) {
 			int cantidad = libroRetornado.getCantidad();
 			libroRetornado.setCantidad(++cantidad);
@@ -56,7 +56,7 @@ public class ControllerLibro {
 	@DeleteMapping(path = "/libro/delete/{codigo}")
 	public ResponseEntity<Libro> deleteUser(@PathVariable(name = "codigo") String codigoIsbn) {
 		Libro libroRetornado;
-		libroRetornado = procesoLibro.validarEjemplarInventario(codigoIsbn);
+		libroRetornado = logicaNegocio.validarEjemplarInventario(codigoIsbn);
 		if (libroRetornado != null) {
 			int cantidad = libroRetornado.getCantidad();
 			if (cantidad != 0) {
@@ -75,9 +75,7 @@ public class ControllerLibro {
 
 	@GetMapping(path = "/libro/get")
 	List<Libro> getLibro() throws URISyntaxException {
-
 		List<Libro> libroRetornado = serviceLibro.findAll();
-
 		return libroRetornado;
 	}
 
