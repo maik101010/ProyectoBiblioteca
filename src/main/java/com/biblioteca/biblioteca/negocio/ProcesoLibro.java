@@ -18,10 +18,7 @@ public class ProcesoLibro {
 
 	public Libro validarEjemplarInventario(String codigoIsbn) {
 		Libro libro = serviceLibro.findByCodigoIsbn(codigoIsbn);
-		if (libro!=null) {
-			int cantidad = libro.getCantidad();
-			libro.setCantidad(++cantidad);
-		}
+		
 		return libro;
 	}
 
