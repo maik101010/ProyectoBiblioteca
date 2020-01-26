@@ -12,7 +12,6 @@ public class BuilderLibro {
 	
 	private String codigo;
 	private String nombre;
-	private double precio;
 	
 	public BuilderLibro() {
 		this.codigo = CODIGO;
