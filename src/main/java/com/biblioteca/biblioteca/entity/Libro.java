@@ -20,8 +20,6 @@ public class Libro {
 	@Column(name = "cantidad")
 	private int cantidad;
 	
-	
-
 	public Libro(String codigoIsbn, String nombreLibro) {
 		super();
 		this.codigoIsbn = codigoIsbn;

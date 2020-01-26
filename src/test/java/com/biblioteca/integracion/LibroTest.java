@@ -34,11 +34,12 @@ public class LibroTest {
 
 	@Test
 	public void validarEjemplar() {
-		Libro libro = new BuilderLibro().conCodigo(CODIGO_LIBRO_DOS).build();
+		Libro libro = new BuilderLibro().conNombreAndCodigo("El coronel", CODIGO_LIBRO_DOS).build();
 		libro = serviceLibroValidacion.insertarLibro(libro.getCodigoIsbn(), libro.getNombreLibro());
 //		when(serviceLibroValidacion.validarEjemplarInventario(libro.getCodigoIsbn())).thenReturn(libro);
-
-		Assert.assertNotNull(serviceLibroValidacion.validarEjemplarInventario(libro.getCodigoIsbn()));
+		Libro libroReturn = repositoryLibro.findByCodigoIsbn(libro.getCodigoIsbn());
+		Assert.assertNotNull(libroReturn);
+//		Assert.assertNotNull(serviceLibroValidacion.validarEjemplarInventario(libro.getCodigoIsbn()));
 	}
 
 	@Test

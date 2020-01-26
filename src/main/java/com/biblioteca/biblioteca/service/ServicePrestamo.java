@@ -24,12 +24,13 @@ public class ServicePrestamo {
 
 	public void insertarPrestamo(PrestamoDto prestamoDto) throws ExepcionPalindromo, ExepcionLibroPrestado {
 		Prestamo entity = new Prestamo();
-		Libro libro = null;		
-		if (logicaNegocio.palindromo(prestamoDto.getCodigoIsbn())) {
-			throw new ExepcionPalindromo("los libros palíndromos solo se pueden utilizar en la biblioteca");
-		} else {
-			libro = serviceLibro.validarEjemplarInventario(prestamoDto.getCodigoIsbn());
-			if (libro != null && libro.getCantidad() > 0) {
+		Libro libro = null;
+
+		libro = serviceLibro.validarEjemplarInventario(prestamoDto.getCodigoIsbn());
+		if (libro != null && libro.getCantidad() > 0) {
+			if (logicaNegocio.palindromo(prestamoDto.getCodigoIsbn())) {
+				throw new ExepcionPalindromo("los libros palíndromos solo se pueden utilizar en la biblioteca");
+			} else {
 				int cantidad = libro.getCantidad();
 				libro.setCantidad(--cantidad);
 				serviceLibro.actualizarLibro(libro);
@@ -37,19 +38,20 @@ public class ServicePrestamo {
 				entity.setLibro(libro);
 				entity.setEstadoPrestamo(true);
 				Date fechaSolicitud = new Date();
-				Date fechaMaximaEntrega = logicaNegocio.calcularfechaEntregaMaxima(fechaSolicitud, prestamoDto.getCodigoIsbn(),
-						15);
+				Date fechaMaximaEntrega = logicaNegocio.calcularfechaEntregaMaxima(fechaSolicitud,
+						prestamoDto.getCodigoIsbn(), 15);
 				entity.setFechaSolicitud(fechaSolicitud);
 				entity.setFechaEntrega(fechaMaximaEntrega);
-				repositoryPrestamo.save(entity);							
-			} else {
-				throw new ExepcionLibroPrestado("El libro con el codigo " + prestamoDto.getCodigoIsbn() + " no tiene "
-						+ "unidades disponibles");
+				repositoryPrestamo.save(entity);
 			}
-		}						
+		} else {
+			throw new ExepcionLibroPrestado(
+					"El libro con el codigo " + prestamoDto.getCodigoIsbn() + " no tiene " + "unidades disponibles");
+		}
+
 	}
-	
-	public List<Prestamo> findAll() {		
+
+	public List<Prestamo> findAll() {
 		return repositoryPrestamo.findAll();
 	}
 
