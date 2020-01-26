@@ -16,15 +16,6 @@ import com.biblioteca.biblioteca.service.ServiceLibro;
 @Component
 public class ProcesoLogicaNegocio {
 
-	@Autowired
-	private ServiceLibro serviceLibro;
-
-	public Libro validarEjemplarInventario(String codigoIsbn) {
-		Libro libro = serviceLibro.findByCodigoIsbn(codigoIsbn);
-
-		return libro;
-	}
-
 	public boolean palindromo(String codigoIsbn) {
 		return codigoIsbn.equals(new StringBuilder(codigoIsbn).reverse().toString());
 	}

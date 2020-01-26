@@ -14,6 +14,11 @@ import com.biblioteca.biblioteca.interfaces.RepositoryLibro;
 public class ServiceLibro {
 	@Autowired RepositoryLibro repositoryLibro;
 	
+	public ServiceLibro(RepositoryLibro nombreLibro) {
+		this.repositoryLibro = nombreLibro;
+	}
+	
+	
 	public Libro insertarLibro(String codigoIsbn, String nombreLibro) {
 		Libro entity = new Libro();
 		entity.setCodigoIsbn(codigoIsbn);
@@ -35,6 +40,11 @@ public class ServiceLibro {
 	public List<Libro> findAll() {
 		// TODO Auto-generated method stub
 		return repositoryLibro.findAll();
+	}
+	
+	public Libro validarEjemplarInventario(String codigoIsbn) {
+		Libro libro = repositoryLibro.findByCodigoIsbn(codigoIsbn);
+		return libro;
 	}
 
 //	public boolean existsByCodigoIsbn(String codigoIsbn) {

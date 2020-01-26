@@ -29,7 +29,7 @@ public class ServicePrestamo {
 			new ExepcionPalindromo("los libros palíndromos solo se pueden utilizar en la biblioteca");
 		} else {
 			entity.setNombreSolicitante(prestamoDto.getNombrePersona());
-			libro = logicaNegocio.validarEjemplarInventario(prestamoDto.getCodigoIsbn());
+			libro = serviceLibro.validarEjemplarInventario(prestamoDto.getCodigoIsbn());
 			if (libro != null) {
 				registrar = true;
 				int cantidad = libro.getCantidad();

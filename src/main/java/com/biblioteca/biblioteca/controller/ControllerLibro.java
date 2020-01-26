@@ -37,7 +37,7 @@ public class ControllerLibro {
 	@PostMapping(path = "/libro/add")
 	ResponseEntity<Libro> crearLibro(@Valid @RequestBody Libro libro) throws URISyntaxException {
 		Libro libroRetornado;
-		libroRetornado = logicaNegocio.validarEjemplarInventario(libro.getCodigoIsbn());
+		libroRetornado = serviceLibro.validarEjemplarInventario(libro.getCodigoIsbn());
 		if (libroRetornado != null) {
 			int cantidad = libroRetornado.getCantidad();
 			libroRetornado.setCantidad(++cantidad);
@@ -56,7 +56,7 @@ public class ControllerLibro {
 	@DeleteMapping(path = "/libro/delete/{codigo}")
 	public ResponseEntity<Libro> deleteUser(@PathVariable(name = "codigo") String codigoIsbn) {
 		Libro libroRetornado;
-		libroRetornado = logicaNegocio.validarEjemplarInventario(codigoIsbn);
+		libroRetornado = serviceLibro.validarEjemplarInventario(codigoIsbn);
 		if (libroRetornado != null) {
 			int cantidad = libroRetornado.getCantidad();
 			if (cantidad != 0) {
