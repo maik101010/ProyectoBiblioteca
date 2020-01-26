@@ -19,6 +19,16 @@ public class Libro {
 	private String nombreLibro;
 	@Column(name = "cantidad")
 	private int cantidad;
+	
+	
+
+	public Libro(String codigoIsbn, String nombreLibro) {
+		super();
+		this.codigoIsbn = codigoIsbn;
+		this.nombreLibro = nombreLibro;
+	}
+	
+	public Libro() {}
 
 	public String getCodigoIsbn() {
 		return codigoIsbn;

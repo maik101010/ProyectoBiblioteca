@@ -12,13 +12,18 @@ import com.biblioteca.biblioteca.interfaces.RepositoryLibro;
 
 @Service
 public class ServiceLibro {
-	@Autowired RepositoryLibro repositoryLibro;
+	@Autowired private RepositoryLibro repositoryLibro;
+	private static final int CANTIDAD_REGISTRO =1;
+	
+	public ServiceLibro(RepositoryLibro nombreLibro) {
+		this.repositoryLibro = nombreLibro;
+	}
 	
 	public Libro insertarLibro(String codigoIsbn, String nombreLibro) {
 		Libro entity = new Libro();
 		entity.setCodigoIsbn(codigoIsbn);
 		entity.setNombreLibro(nombreLibro);
-		entity.setCantidad(1);
+		entity.setCantidad(CANTIDAD_REGISTRO);
 		repositoryLibro.save(entity);
 		return entity;
 	}
@@ -33,15 +38,12 @@ public class ServiceLibro {
 	}
 
 	public List<Libro> findAll() {
-		// TODO Auto-generated method stub
 		return repositoryLibro.findAll();
 	}
-
-//	public boolean existsByCodigoIsbn(String codigoIsbn) {
-//		// TODO Auto-generated method stub
-//		return repositoryLibro.e;
-//	}
-
 	
+	public Libro validarEjemplarInventario(String codigoIsbn) {
+		Libro libro = repositoryLibro.findByCodigoIsbn(codigoIsbn);
+		return libro;
+	}
 
 }
