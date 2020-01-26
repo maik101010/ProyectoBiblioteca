@@ -8,28 +8,19 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.biblioteca.biblioteca.dto.PrestamoDto;
-import com.biblioteca.biblioteca.entity.Libro;
 import com.biblioteca.biblioteca.entity.Prestamo;
 import com.biblioteca.biblioteca.exception.ExepcionLibroPrestado;
 import com.biblioteca.biblioteca.exception.ExepcionPalindromo;
 import com.biblioteca.biblioteca.helper.PrestamoHelper;
-import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
-import com.biblioteca.biblioteca.service.ServiceLibro;
 import com.biblioteca.biblioteca.service.ServicePrestamo;
 
 @RestController

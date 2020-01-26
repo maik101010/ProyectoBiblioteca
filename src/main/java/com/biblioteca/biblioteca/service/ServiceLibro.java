@@ -2,7 +2,6 @@ package com.biblioteca.biblioteca.service;
 
 import java.util.List;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class ServiceLibro {
 		this.repositoryLibro = nombreLibro;
 	}
 	
-	public Libro insertarLibro(String codigoIsbn, String nombreLibro) {
+		public Libro insertarLibro(String codigoIsbn, String nombreLibro) {
 		Libro entity = new Libro();
 		entity.setCodigoIsbn(codigoIsbn);
 		entity.setNombreLibro(nombreLibro);
@@ -29,7 +28,6 @@ public class ServiceLibro {
 	}
 
 	public Libro findByCodigoIsbn(String codigoIsbn) {
-		// TODO Auto-generated method stub
 		return repositoryLibro.findByCodigoIsbn(codigoIsbn);
 	}
 

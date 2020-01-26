@@ -10,7 +10,6 @@ import com.biblioteca.biblioteca.dto.PrestamoDto;
 import com.biblioteca.biblioteca.entity.Libro;
 import com.biblioteca.biblioteca.entity.Prestamo;
 import com.biblioteca.biblioteca.exception.*;
-import com.biblioteca.biblioteca.helper.PrestamoHelper;
 import com.biblioteca.biblioteca.interfaces.RepositoryPrestamo;
 import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
 
@@ -34,14 +33,12 @@ public class ServicePrestamo {
 				int cantidad = libro.getCantidad();
 				libro.setCantidad(--cantidad);
 				serviceLibro.actualizarLibro(libro);
-				
 				entity.setNombreSolicitante(prestamoDto.getNombrePersona());
 				entity.setLibro(libro);
 				entity.setEstadoPrestamo(true);
 				Date fechaSolicitud = new Date();
 				Date fechaMaximaEntrega = logicaNegocio.calcularfechaEntregaMaxima(fechaSolicitud, prestamoDto.getCodigoIsbn(),
 						15);
-				
 				entity.setFechaSolicitud(fechaSolicitud);
 				entity.setFechaEntrega(fechaMaximaEntrega);
 				repositoryPrestamo.save(entity);							
@@ -49,7 +46,6 @@ public class ServicePrestamo {
 				throw new ExepcionLibroPrestado("El libro con el codigo " + prestamoDto.getCodigoIsbn() + " no tiene "
 						+ "unidades disponibles");
 			}
-
 		}						
 	}
 	

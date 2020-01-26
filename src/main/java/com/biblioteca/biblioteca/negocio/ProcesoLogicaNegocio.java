@@ -4,14 +4,8 @@ package com.biblioteca.biblioteca.negocio;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.biblioteca.biblioteca.controller.ControllerLibro;
-import com.biblioteca.biblioteca.entity.Libro;
-import com.biblioteca.biblioteca.service.ServiceLibro;
 
 @Component
 public class ProcesoLogicaNegocio {

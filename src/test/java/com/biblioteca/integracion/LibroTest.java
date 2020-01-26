@@ -1,7 +1,6 @@
 package com.biblioteca.integracion;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +26,6 @@ public class LibroTest {
 
 	@Test
 	public void agregarLibro() {
-
 		Libro libro = new BuilderLibro().conNombre(EL_MITO).build();
 		libro = serviceLibroValidacion.insertarLibro(libro.getCodigoIsbn(), libro.getNombreLibro());
 		Assert.assertNotNull(libro);
