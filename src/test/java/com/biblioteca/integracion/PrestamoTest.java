@@ -6,8 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -28,7 +28,12 @@ public class PrestamoTest {
 	ServiceLibro serviceLibro = mock(ServiceLibro.class);
 	RepositoryLibro repositoryLibro = mock(RepositoryLibro.class);
 	ServiceLibro serviceLibroValidacion = new ServiceLibro(repositoryLibro);
-	ProcesoLogicaNegocio logicaNegocio = new ProcesoLogicaNegocio();
+	ProcesoLogicaNegocio logicaNegocio;
+	
+	@Before
+	public void setUp() {
+		logicaNegocio = new ProcesoLogicaNegocio();	
+	}
 
 	@Test
 	public void calculoFechaEntregaTest() {
@@ -47,7 +52,7 @@ public class PrestamoTest {
 		Libro libro1 = new BuilderLibro().conCodigo(CODIGO_LIBRO_MAYOR_30).build();					
 		Libro libro2 = new BuilderLibro().conCodigo(CODIGO_LIBRO_MENOR_30).build();
 		
-		ProcesoLogicaNegocio logicaNegocio = new ProcesoLogicaNegocio();		
+			
 		ProcesoLogicaNegocio logicaNegocioTemp1 =  Mockito.spy(logicaNegocio);
 		ProcesoLogicaNegocio logicaNegocioTemp2 =  Mockito.spy(logicaNegocio);
 		
@@ -65,6 +70,13 @@ public class PrestamoTest {
 		//assert
 		Assert.assertTrue(assertEqualDates(fechaEntregaTest1, fechaEntregaEsperada.getTime()));
 		Assert.assertTrue(fechaEntregaTest2 == null);
+	}
+	
+	@Test
+	public void sumarDigitosTest() {	
+		int valorEsperdo = 10;
+		int suma = logicaNegocio.sumarDigitosIsbn(CODIGO_LIBRO_MENOR_30);
+		Assert.assertTrue(suma == valorEsperdo);
 	}
 	
 	private  boolean assertEqualDates(Date fecha1, Date fecha2) {
