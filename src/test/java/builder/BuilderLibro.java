@@ -6,20 +6,16 @@ public class BuilderLibro {
 	
 
 	private static final String CODIGO= "AAS222";
-	private static final String NOMBRE_PALINDROMO = "lateleletal";
 	private static final String NOMBRE = "CUALQUIERA";
-	
-	
+		
 	private String codigo;
 	private String nombre;
 	
 	public BuilderLibro() {
 		this.codigo = CODIGO;
 		this.nombre = NOMBRE;
-		
 	}
 	
-
 	public BuilderLibro conCodigo(String codigo) {
 		this.codigo=codigo;
 		return this;
@@ -30,11 +26,8 @@ public class BuilderLibro {
 		return this;
 	}
 
-	
-	
 	public Libro build() {
 		return new Libro(this.codigo, this.nombre);
 	}
-
 
 }

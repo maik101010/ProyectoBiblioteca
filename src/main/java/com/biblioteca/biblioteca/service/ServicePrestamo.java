@@ -15,11 +15,11 @@ import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
 @Service
 public class ServicePrestamo {
 	@Autowired
-	RepositoryPrestamo repositoryPrestamo;
+	private RepositoryPrestamo repositoryPrestamo;
 	@Autowired
-	ProcesoLogicaNegocio logicaNegocio;
+	private ProcesoLogicaNegocio logicaNegocio;
 	@Autowired
-	ServiceLibro serviceLibro;
+	private ServiceLibro serviceLibro;
 
 	public boolean insertarPrestamo(PrestamoDto prestamoDto) {
 		Prestamo entity = new Prestamo();
