@@ -6,6 +6,8 @@ public class PrestamoDto {
 	private String nombrePersona;
 	private String codigoIsbn;
 	private Date fechaSolicitud;
+	private Date fechaEntrega;
+	
 	
 	public String getNombrePersona() {
 		return nombrePersona;
@@ -25,6 +27,14 @@ public class PrestamoDto {
 	public void setFechaSolicitud(Date fechaSolicitud) {
 		this.fechaSolicitud = fechaSolicitud;
 	}
+	public Date getFechaEntrega() {
+		return fechaEntrega;
+	}
+	public void setFechaEntrega(Date fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
+	}
+	
+	
 	
 		
 }

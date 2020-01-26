@@ -2,7 +2,9 @@ package com.biblioteca.biblioteca.controller;
 
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.biblioteca.biblioteca.dto.PrestamoDto;
 import com.biblioteca.biblioteca.entity.Libro;
 import com.biblioteca.biblioteca.entity.Prestamo;
+import com.biblioteca.biblioteca.exception.ExepcionLibroPrestado;
+import com.biblioteca.biblioteca.exception.ExepcionPalindromo;
+import com.biblioteca.biblioteca.helper.PrestamoHelper;
 import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
 import com.biblioteca.biblioteca.service.ServiceLibro;
 import com.biblioteca.biblioteca.service.ServicePrestamo;
@@ -36,19 +41,29 @@ public class ControllerPrestamo {
 	@Autowired
 	private ServicePrestamo servicePrestamo;
 
-//	@Autowired
-//	private ProcesoLibro procesoLibro;
 
 	@PostMapping(path = "/prestamo/add")
-	String crearLibro(@Valid @RequestBody PrestamoDto prestamoDto) throws URISyntaxException {
-		String response = null;
+	public Map<String, String> crearPrestamo(@Valid @RequestBody PrestamoDto prestamoDto) throws URISyntaxException, ExepcionLibroPrestado {
+		String mensaje = null;
 		prestamoDto.setFechaSolicitud(new Date());
-		if (servicePrestamo.insertarPrestamo(prestamoDto)) {
-			response = "Registrado";
-		}else {
-			response = "No registrado";
+		
+		try {
+			servicePrestamo.insertarPrestamo(prestamoDto);
+			mensaje =  "Registrado";
+		} catch (ExepcionPalindromo | ExepcionLibroPrestado e) {
+			mensaje =  e.getMessage();
 		}
-		return response;
+		
+		Map<String, String> respuesta =  new HashMap<>();
+		respuesta.put("mensaje", mensaje);
+		return respuesta;
+
+	}
+	
+	@GetMapping(path = "/prestamo/get")
+	List<PrestamoDto> obtenerPrestamos() throws URISyntaxException {
+		List<Prestamo> libroRetornado = servicePrestamo.findAll();
+		return PrestamoHelper.toListLevel1DTO(libroRetornado);
 
 	}
 

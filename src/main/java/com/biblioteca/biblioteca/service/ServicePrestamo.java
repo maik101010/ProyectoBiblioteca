@@ -1,6 +1,7 @@
 package com.biblioteca.biblioteca.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import com.biblioteca.biblioteca.dto.PrestamoDto;
 import com.biblioteca.biblioteca.entity.Libro;
 import com.biblioteca.biblioteca.entity.Prestamo;
 import com.biblioteca.biblioteca.exception.*;
+import com.biblioteca.biblioteca.helper.PrestamoHelper;
 import com.biblioteca.biblioteca.interfaces.RepositoryPrestamo;
 import com.biblioteca.biblioteca.negocio.ProcesoLogicaNegocio;
 
@@ -21,34 +23,41 @@ public class ServicePrestamo {
 	@Autowired
 	ServiceLibro serviceLibro;
 
-	public boolean insertarPrestamo(PrestamoDto prestamoDto) {
+	public void insertarPrestamo(PrestamoDto prestamoDto) throws ExepcionPalindromo, ExepcionLibroPrestado {
 		Prestamo entity = new Prestamo();
 		Libro libro = null;
 		boolean registrar = false;
 		if (logicaNegocio.palindromo(prestamoDto.getCodigoIsbn())) {
-			new ExepcionPalindromo("los libros palíndromos solo se pueden utilizar en la biblioteca");
-		} else {
-			entity.setNombreSolicitante(prestamoDto.getNombrePersona());
+			throw new  ExepcionPalindromo("los libros palíndromos solo se pueden utilizar en la biblioteca");
+		} else {			
 			libro = logicaNegocio.validarEjemplarInventario(prestamoDto.getCodigoIsbn());
-			if (libro != null) {
+			if (libro != null && libro.getCantidad() >0) {
 				registrar = true;
 				int cantidad = libro.getCantidad();
 				libro.setCantidad(--cantidad);
 				serviceLibro.actualizarLibro(libro);
 			} else {
-				new ExepcionLibroPrestado("El libro con el codigo " + prestamoDto.getCodigoIsbn() + " no existe");
+				throw new ExepcionLibroPrestado("El libro con el codigo " + prestamoDto.getCodigoIsbn() + " no tiene "
+						+ "unidades disponibles");
 			}
 		}
-		Date fechaMaximaEntrega = logicaNegocio.calcularfechaEntregaMaxima(prestamoDto.getFechaSolicitud(), prestamoDto.getCodigoIsbn(), 15);
+		
+		Date fechaSolicitud = new Date();
+		Date fechaMaximaEntrega = logicaNegocio.calcularfechaEntregaMaxima(fechaSolicitud, prestamoDto.getCodigoIsbn(), 15);
 		
 		if (registrar) {
+			entity.setNombreSolicitante(prestamoDto.getNombrePersona());
 			entity.setLibro(libro);
 			entity.setEstadoPrestamo(true);
+			entity.setFechaSolicitud(fechaSolicitud);
 			entity.setFechaEntrega(fechaMaximaEntrega);
 			repositoryPrestamo.save(entity);
-		}
-
-		return registrar;
+		}		
+	}
+	
+	
+	public List<Prestamo> findAll() {		
+		return repositoryPrestamo.findAll();
 	}
 
 }
