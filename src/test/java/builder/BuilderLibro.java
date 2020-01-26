@@ -25,6 +25,13 @@ public class BuilderLibro {
 		this.nombre=nombre;
 		return this;
 	}
+	
+	public BuilderLibro conNombreAndCodigo(String nombre, String codigo) {
+		this.nombre=nombre;
+		this.codigo = codigo;
+		return this;
+	}
+
 
 	public Libro build() {
 		return new Libro(this.codigo, this.nombre);
